@@ -1,0 +1,23 @@
+---
+- hosts: all
+  connection: ssh
+
+  gather_facts: false
+  become: true
+  
+  tasks:
+  - name: installing subversion
+    apt:
+      name: subversion
+      state: present
+
+  - name: copy svnadmin script
+    copy:
+      src: files/svnadmin.sh
+      dest: /tmp/svnadmin.sh
+      mode: +x
+
+  - name: config svnadmin 
+    shell: /tmp/svnadmin.sh
+    args:
+      warn: no
